@@ -17,7 +17,7 @@ public:
             } else {
                 result += dp[i];
             }
-            if (i - maxPts >= 0) {
+            if (i >= maxPts ) {
                 windowSum -= dp[i - maxPts];
             }
         }
