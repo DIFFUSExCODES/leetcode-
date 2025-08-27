@@ -1,38 +1,5 @@
-#include <vector>
-#include <algorithm>
-
 class Solution {
 public:
-
-    int dfs(const std::vector<std::vector<int>>& grid,
-            int i, int j, int di1, int dj1, int di2, int dj2,
-            int t, bool turned, bool moved) {
-        int m = grid.size(), n = grid[0].size();
-        int expect = (t % 2) * 2;
-        int best = t;
-
-        if (!turned) {
-
-            int ni = i + di1, nj = j + dj1;
-            if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == expect) {
-                best = std::max(best, dfs(grid, ni, nj, di1, dj1, di2, dj2, t + 1, false, true));
-            }
-
-            if (moved) {
-                ni = i + di2; nj = j + dj2;
-                if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == expect) {
-                    best = std::max(best, dfs(grid, ni, nj, di1, dj1, di2, dj2, t + 1, true, true));
-                }
-            }
-        } else {
-            int ni = i + di2, nj = j + dj2;
-            if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == expect) {
-                best = std::max(best, dfs(grid, ni, nj, di1, dj1, di2, dj2, t + 1, true, true));
-            }
-        }
-
-        return best;
-    }
 
     int searchV(std::vector<std::vector<int>>& grid, int i, int j,
                 int di1, int dj1, int di2, int dj2) {
@@ -62,5 +29,35 @@ public:
             }
         }
         return result;
+    }
+
+    int dfs(const std::vector<std::vector<int>>& grid,
+            int i, int j, int di1, int dj1, int di2, int dj2,
+            int t, bool turned, bool moved) {
+        int m = grid.size(), n = grid[0].size();
+        int expect = (t % 2) * 2;
+        int best = t;
+
+        if (!turned) {
+
+            int ni = i + di1, nj = j + dj1;
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == expect) {
+                best = std::max(best, dfs(grid, ni, nj, di1, dj1, di2, dj2, t + 1, false, true));
+            }
+
+            if (moved) {
+                ni = i + di2; nj = j + dj2;
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == expect) {
+                    best = std::max(best, dfs(grid, ni, nj, di1, dj1, di2, dj2, t + 1, true, true));
+                }
+            }
+        } else {
+            int ni = i + di2, nj = j + dj2;
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == expect) {
+                best = std::max(best, dfs(grid, ni, nj, di1, dj1, di2, dj2, t + 1, true, true));
+            }
+        }
+
+        return best;
     }
 };
